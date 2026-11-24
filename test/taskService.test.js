@@ -8,7 +8,7 @@ const {
   validateTaskInput
 } = require("../src/taskService");
 
-//describe("Normal cases", () => {
+describe("Normal cases", () => {
   it("validates and normalizes task input", () => {
     const result = validateTaskInput({ title: "  Ship it  ", description: "  Notes " });
     assert.deepEqual(result, {
