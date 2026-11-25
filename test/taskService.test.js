@@ -86,6 +86,16 @@ describe("Edge cases", () => {
     assert.equal(result.valid, true);
     assert.equal(result.value.title.length, 120);
   });
+
+  it("enforces the 500-character description length boundary", () => {
+    const atLimit = validateTaskInput({ title: "Plan", description: "d".repeat(500) });
+    assert.equal(atLimit.valid, true);
+    assert.equal(atLimit.value.description.length, 500);
+
+    const overLimit = validateTaskInput({ title: "Plan", description: "d".repeat(501) });
+    assert.equal(overLimit.valid, false);
+    assert.deepEqual(overLimit.errors, ["Description must be 500 characters or fewer"]);
+  });
 });
 
 describe("Invalid cases", () => {
