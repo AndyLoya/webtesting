@@ -41,3 +41,21 @@
 - **Why:** Complete and preserve the blocked-PR-then-fixed merge demonstration on the default branch.
 - **Evidence:** GitHub merge commit `f75270065e577ffb4b04f4aa5f1331356053165c`; PR #1 merged at 2026-11-23 20:36:09 -0600. `origin/main` points to this merge commit.
 - **Problems & Fixes:** The merge brought commit `047fef5a45078a376ae087c33f7190dfe70f037d` into `main` after the intentionally failing commit was corrected.
+
+- **Date & Author:** 2026-11-24 - Chong (tests); Sebastian (team review and CI verification)
+- **What we did:** Chong added the 500-character description boundary test in `test/taskService.test.js` on `test/edge-case-coverage`; the change was submitted and merged as PR #3. Sebastian reviewed the team's pull requests and verified the passing CI checks.
+- **Why:** Cover the description limit at 500 and 501 characters and verify changes before integration.
+- **Evidence:** Commit `bb2bef578d95e4ff19c93b7cb254675a3bf6bde3`, merged through PR #3; GitHub Actions run 7 passed. The team reports Sebastian verified 13 passing tests and approved the pull requests; no formal GitHub review records were returned during this wrap-up.
+- **Problems & Fixes:** The length limit lacked an explicit boundary test; the new test confirms 500 characters are accepted and 501 are rejected. Work used feature branches and PRs rather than direct main changes; GitHub branch metadata reported `main` as unprotected during this wrap-up, so protection enforcement should be confirmed in repository settings.
+
+- **Date & Author:** 2026-11-24 - AndyLoya
+- **What we did:** Implemented Render readiness in PR #4 on `chore/render-deployment` (commit `427aebb`): added `GET /health` in `src/app.js`, its HTTP test in `test/health.test.js`, and the five-section runbook in `docs/DEPLOYMENT.md`. Finalized this README and the development log on `docs/final-wrapup`.
+- **Why:** Provide a health check, deployment/rollback instructions, and clear setup, test, and live-site guidance.
+- **Evidence:** PR #4 merged into `main`; GitHub Actions runs 8 and 9 passed. The live homepage and `/health` both returned HTTP 200 during this wrap-up.
+- **Problems & Fixes:** Render needed a health-check path and repeatable operating instructions; `/health` and the runbook provide them. The README now documents the live URL, free-tier cold-start expectation, and in-memory reset behavior.
+
+- **Date & Author:** 2026-11-24 - Elias
+- **What we did:** Configured and deployed the `lightweight-task-board` Render Web Service from `main` using `npm ci`, `npm start`, and `/health`; Elias also verified the Render rollback procedure.
+- **Why:** Publish the task board and confirm that the service can be checked and recovered after a deployment.
+- **Evidence:** The live URL is https://lightweight-task-board.onrender.com/; `GET /` and `GET /health` returned HTTP 200 during this wrap-up. The rollback verification is recorded from Elias's deployment report.
+- **Problems & Fixes:** Render's free tier may cold-start for approximately 30-50 seconds. Tasks remain in memory and reset on restarts or redeploys; the README and deployment runbook document these limitations and the recovery steps.
