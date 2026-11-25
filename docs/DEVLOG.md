@@ -19,16 +19,16 @@
 - **Problems & Fixes:** The workflow is configured for both `push` and `pull_request` events against `main`; no CI fix commit is present in the repository.
 
 - **Date & Author:** 2026-11-23 - AndyLoya
-- **What we did:** Created the `test/blocked-pr-demo` branch from `main` and pushed it to GitHub for a pull-request protection demonstration.
-- **Why:** Exercise the workflow from a separate branch before merging changes into `main`.
+- **What we did:** Created the `test/blocked-pr-demo` branch from `main` and pushed it to GitHub for a pull-request CI failure-and-fix demonstration.
+- **Why:** Exercise the failing-check and correction workflow before merging changes into `main`.
 - **Evidence:** Local branch and `origin/test/blocked-pr-demo` both point to `047fef5a45078a376ae087c33f7190dfe70f037d`; GitHub PR #1 is at https://github.com/AndyLoya/webtesting/pull/1.
 - **Problems & Fixes:** The branch was used specifically for the failing-check and corrected-check demonstration.
 
 - **Date & Author:** 2026-11-23 - AndyLoya
-- **What we did:** Added an intentional failure to the blocked-PR demo by commenting out `describe("Normal cases", ...)` in the unit test file.
-- **Why:** Demonstrate that a pull request with a failing CI check could not progress through the protected `main` branch workflow.
-- **Evidence:** Commit `9f9332103e0ca069003d7c0e3958d4a95fdb497d` (`test: intentionally fail check to verify PR block`) and PR #1.
-- **Problems & Fixes:** The problem was deliberately introduced; its fix restored the test declaration in the next commit.
+- **What we did:** Added an intentional failure to the pull-request demo by commenting out `describe("Normal cases", ...)` in the unit test file.
+- **Why:** Verify that GitHub Actions reported the failing test before the test was restored and the PR was merged.
+- **Evidence:** Commit `9f9332103e0ca069003d7c0e3958d4a95fdb497d` (`test: intentionally fail check to verify PR block`), [PR #1](https://github.com/AndyLoya/webtesting/pull/1), the [failed-check screenshot](./evidence/Captura%20de%20pantalla%202026-11-23%20202110.png), and the [failed GitHub Actions run](https://github.com/AndyLoya/webtesting/actions/runs/45311687574).
+- **Problems & Fixes:** The problem was deliberately introduced; its fix restored the test declaration in the next commit, followed by a [passing Actions run](https://github.com/AndyLoya/webtesting/actions/runs/45313030797). The screenshot shows the failed check but also displays a merge button, so it does not independently prove that GitHub blocked merging.
 
 - **Date & Author:** 2026-11-23 - AndyLoya
 - **What we did:** Restored `describe("Normal cases", ...)` to correct the intentionally failing unit test.
@@ -38,15 +38,15 @@
 
 - **Date & Author:** 2026-11-23 - JuanPerezDev
 - **What we did:** Merged PR #1 from `test/blocked-pr-demo` into `main` after the demo branch was corrected.
-- **Why:** Complete and preserve the blocked-PR-then-fixed merge demonstration on the default branch.
+- **Why:** Complete and preserve the failing-check, fix, and merge sequence on the default branch.
 - **Evidence:** GitHub merge commit `f75270065e577ffb4b04f4aa5f1331356053165c`; PR #1 merged at 2026-11-23 20:36:09 -0600. `origin/main` points to this merge commit.
 - **Problems & Fixes:** The merge brought commit `047fef5a45078a376ae087c33f7190dfe70f037d` into `main` after the intentionally failing commit was corrected.
 
 - **Date & Author:** 2026-11-24 - Chong (tests); Sebastian (team review and CI verification)
 - **What we did:** Chong added the 500-character description boundary test in `test/taskService.test.js` on `test/edge-case-coverage`; the change was submitted and merged as PR #3. Sebastian reviewed the team's pull requests and verified the passing CI checks.
 - **Why:** Cover the description limit at 500 and 501 characters and verify changes before integration.
-- **Evidence:** Commit `bb2bef578d95e4ff19c93b7cb254675a3bf6bde3`, merged through PR #3; GitHub Actions run 7 passed. The team reports Sebastian verified 13 passing tests and approved the pull requests; no formal GitHub review records were returned during this wrap-up.
-- **Problems & Fixes:** The length limit lacked an explicit boundary test; the new test confirms 500 characters are accepted and 501 are rejected. Work used feature branches and PRs rather than direct main changes; GitHub branch metadata reported `main` as unprotected during this wrap-up, so protection enforcement should be confirmed in repository settings.
+- **Evidence:** Commit `bb2bef578d95e4ff19c93b7cb254675a3bf6bde3`, merged through PR #3; GitHub Actions run 7 passed. The team reports Sebastian verified 13 passing tests and approved the pull requests; no formal GitHub review records were returned during this wrap-up. The [branch rule list](./evidence/Captura%20de%20pantalla%202026-11-24%20184054.png) shows `main` as the matching branch, and the [rule settings](./evidence/Captura%20de%20pantalla%202026-11-24%20185202.png) show pull requests, one approval, and the `test` status check required.
+- **Problems & Fixes:** The length limit lacked an explicit boundary test; the new test confirms 500 characters are accepted and 501 are rejected. Work used feature branches and PRs rather than direct main changes. GitHub initially reported `main` as unprotected; later settings evidence shows the rule requirements, and GitHub now reports `main` as protected.
 
 - **Date & Author:** 2026-11-24 - AndyLoya
 - **What we did:** Implemented Render readiness in PR #4 on `chore/render-deployment` (commit `427aebb`): added `GET /health` in `src/app.js`, its HTTP test in `test/health.test.js`, and the five-section runbook in `docs/DEPLOYMENT.md`. Finalized this README and the development log on `docs/final-wrapup`.
