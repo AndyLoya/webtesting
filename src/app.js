@@ -15,6 +15,10 @@ function createApp({ tasks = [] } = {}) {
   const app = express();
   const taskStore = [...tasks];
 
+  app.get("/health", (req, res) => {
+    res.status(200).json({ status: "ok" });
+  });
+
   app.use(express.json({ limit: "16kb" }));
   app.use(express.static(path.join(__dirname, "..", "public")));
 
